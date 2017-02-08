@@ -20,35 +20,36 @@
 #define kKeyboard_Chinese_Height (252.f)
 
 /** 获取屏幕尺寸、宽度、高度(包含横屏获取的方法) */
-#define SCREEN_WIDTH ([[UIScreen mainScreen] respondsToSelector:@selector(nativeBounds)]?[UIScreen mainScreen].nativeBounds.size.width/[UIScreen mainScreen].nativeScale:[UIScreen mainScreen].bounds.size.width)
-#define SCREENH_HEIGHT ([[UIScreen mainScreen] respondsToSelector:@selector(nativeBounds)]?[UIScreen mainScreen].nativeBounds.size.height/[UIScreen mainScreen].nativeScale:[UIScreen mainScreen].bounds.size.height)
-#define SCREEN_SIZE ([[UIScreen mainScreen] respondsToSelector:@selector(nativeBounds)]?CGSizeMake([UIScreen mainScreen].nativeBounds.size.width/[UIScreen mainScreen].nativeScale,[UIScreen mainScreen].nativeBounds.size.height/[UIScreen mainScreen].nativeScale):[UIScreen mainScreen].bounds.size)
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000 // 当前Xcode支持iOS8及以上
+#define kSCREEN_WIDTH ([[UIScreen mainScreen] respondsToSelector:@selector(nativeBounds)]?[UIScreen mainScreen].nativeBounds.size.width/[UIScreen mainScreen].nativeScale:[UIScreen mainScreen].bounds.size.width)
+#define kSCREENH_HEIGHT ([[UIScreen mainScreen] respondsToSelector:@selector(nativeBounds)]?[UIScreen mainScreen].nativeBounds.size.height/[UIScreen mainScreen].nativeScale:[UIScreen mainScreen].bounds.size.height)
+#define kSCREEN_SIZE ([[UIScreen mainScreen] respondsToSelector:@selector(nativeBounds)]?CGSizeMake([UIScreen mainScreen].nativeBounds.size.width/[UIScreen mainScreen].nativeScale,[UIScreen mainScreen].nativeBounds.size.height/[UIScreen mainScreen].nativeScale):[UIScreen mainScreen].bounds.size)
 #else
-#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
-#define SCREENH_HEIGHT [UIScreen mainScreen].bounds.size.height
-#define SCREEN_SIZE [UIScreen mainScreen].bounds.size
+#define kSCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define kSCREENH_HEIGHT [UIScreen mainScreen].bounds.size.height
+#define kSCREEN_SIZE [UIScreen mainScreen].bounds.size
 #endif
 
 /*************************  硬件相关  *************************/
 
 /** 设备是否为iPhone 4/4S 分辨率320x480，像素640x960，@2x */
-#define iPhone_SCREEN_3_5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kiPhone_SCREEN_3_5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
 /** 设备是否为iPhone 5C/5/5S 分辨率320x568，像素640x1136，@2x */
-#define iPhone_SCREEN_4_0 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kiPhone_SCREEN_4_0 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 /** 设备是否为iPhone 6 分辨率375x667，像素750x1334，@2x */
-#define iPhone_SCREEN_4_7 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kiPhone_SCREEN_4_7 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
 /** 设备是否为iPhone 6 Plus 分辨率414x736，像素1242x2208，@3x */
-#define iPhone_SCREEN_5_5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO)
+#define kiPhone_SCREEN_5_5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO)
 
 /** 判断是否为iPhone */
-#define isiPhone (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define kiPhone (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 /** 判断是否是iPad */
-#define isiPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define kiPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 /** 判断是否为iPod */
-#define isiPod ([[[UIDevice currentDevice] model] isEqualToString:@"iPod touch"])
+#define kiPod ([[[UIDevice currentDevice] model] isEqualToString:@"iPod touch"])
 
 /** 判断是否 Retina屏 */
-#define isRetina ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] && ([UIScreen mainScreen].scale == 2.0f))
+#define kRetina ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] && ([UIScreen mainScreen].scale == 2.0f))
 
 /** 判断是真机还是模拟器 */
 #if TARGET_OS_IPHONE
@@ -63,17 +64,18 @@
 /*************************  系统相关  *************************/
 
 /** 获取系统版本 */
-#define iOS_VERSION ([[UIDevice currentDevice] systemVersion])
+#define kiOS_VERSION ([[UIDevice currentDevice] systemVersion])
 
 /** 是否为iOS6 */
-#define iOS6_OR_LATER (([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0) ? YES : NO)
+#define kiOS6_OR_LATER (([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0) ? YES : NO)
 /** 是否为iOS7 */
-#define iOS7_OR_LATER (([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) ? YES : NO)
+#define kiOS7_OR_LATER (([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) ? YES : NO)
 /** 是否为iOS8 */
-#define iOS8_OR_LATER (([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) ? YES : NO)
+#define kiOS8_OR_LATER (([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) ? YES : NO)
 /** 是否为iOS9 */
-#define iOS9_OR_LATER (([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) ? YES : NO)
-
+#define kiOS9_OR_LATER (([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) ? YES : NO)
+/** 是否为iOS10 */
+#define kiOS10_OR_LATER (([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0) ? YES : NO)
 
 
 /** 获取APP版本 */
@@ -121,7 +123,7 @@
 //NSUserDefaults本地读取
 #define kUserDefaultRead(key) [[NSUserDefaults standardUserDefaults] objectForKey:key];
 //NSUserDefaults本地删除
-#define kUserDefaultSave(key) [[NSUserDefaults standardUserDefaults]removeObjectForKey:key];\
+#define kUserDefaultDelete(key) [[NSUserDefaults standardUserDefaults]removeObjectForKey:key];\
 [[NSUserDefaults standardUserDefaults]synchronize];\
 
 /*************************  颜色相关  *************************/
@@ -168,8 +170,8 @@
 {\
 UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];\
 backBtn.frame = CGRectMake(0, 0, 12, 20);\
-[backBtn setBackgroundImage:[UIImage imageNamed:@"Basic_backArrow.png"] forState:UIControlStateNormal];\
-[backBtn setBackgroundImage:[UIImage imageNamed:@"Basic_backArrow.png"] forState:UIControlStateHighlighted];\
+[backBtn setBackgroundImage:[UIImage imageNamed:@"Basic_BackArrow.png"] forState:UIControlStateNormal];\
+[backBtn setBackgroundImage:[UIImage imageNamed:@"Basic_BackArrow.png"] forState:UIControlStateHighlighted];\
 [backBtn addTarget:self action:@selector(backToFront) forControlEvents:UIControlEventTouchUpInside];\
 UIBarButtonItem *leftBackButton = [[UIBarButtonItem alloc] initWithCustomView:backBtn];\
 leftBackButton.style = UIBarButtonItemStylePlain;\
@@ -212,7 +214,7 @@ viewController.navigationController.interactivePopGestureRecognizer.delegate = (
 
 /** 调试（DEBUG）状态下打印当前方法名，行数以及自定义的内容 */
 #ifdef DEBUG
-#define kDLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+#define kDLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #else
 #define DLog(...)
 #endif
@@ -467,7 +469,7 @@ return _instance; \
 return 1; \
 }
 
-#else 
+#else
 
 /** 当前是ARC环境 */
 #define singleton_m_synchronized(name) \
@@ -501,9 +503,11 @@ return _instance; \
 return _instance; \
 }
 
-
 #endif
 
-#endif
 
+
+
+
+#endif
 

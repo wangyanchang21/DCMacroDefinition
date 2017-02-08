@@ -14,7 +14,7 @@ A header file contains macro definitions for iOS, which defines many convenient 
 
 - Color Related
 
-- UI handling Related
+- UI Handling Related
 
 - Application Singleton
 
@@ -27,9 +27,10 @@ A header file contains macro definitions for iOS, which defines many convenient 
 
 -----
 
+
 # DCMacroDefinition
 
-DCMacroDefinition 是一个定义了许多方便开发的宏定义的集合。
+DCMacroDefinition 是一个定义了许多便利于开发者的宏定义头文件。
 
 ## 目录
 
